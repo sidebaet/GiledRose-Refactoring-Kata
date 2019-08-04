@@ -1,7 +1,7 @@
 package com.gildedrose;
 
 class GildedRose {
-    Item[] items;
+    private Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -58,5 +58,12 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    public Item getItem(int index) {
+        if (items == null || index > items.length){
+            return null;
+        }
+        return items[index];
     }
 }
