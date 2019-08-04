@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import static com.gildedrose.Item.*;
+
 class GildedRose {
     private Item[] items;
 
@@ -8,56 +10,68 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
-
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
-
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
-            }
+        if (items == null) {
+            return;
         }
+        for (var item : items){
+            item.sellIn = getSelling(item);
+            item.quality = getQuality(item);
+        }
+    }
+
+    private int getSelling(Item item){
+        if (SULFURAS.equals(item.name)) {
+            return item.sellIn;
+        }
+        return item.sellIn - 1;
+    }
+
+    private int getQuality(Item item){
+        var name = item.name;
+        var quality = item.quality;
+        if (quality == 0){
+            return 0;
+        }
+        if (SULFURAS.equals(name)){
+            return 80;
+        }
+        switch (name){
+            case AGED_BRIE:
+                quality = getAgedBrieQuality(quality);
+                break;
+            case BACKSTAGE:
+                quality = getBackstageQuality(quality, item.sellIn);
+                break;
+            default:
+                quality = getDefaultQuality(quality, item.sellIn);
+                break;
+        }
+        if (quality > 50) {
+            return 50;
+        }
+        return quality;
+    }
+
+    private int getDefaultQuality(int quality, int sellIn) {
+        if (sellIn < 0){
+            return 0;
+        }
+        return quality - 1;
+    }
+
+    private int getBackstageQuality(int quality, int sellIn) {
+        if (sellIn >= 10){
+            return quality + 1 ;
+        } else if (sellIn >= 5) {
+            return quality + 2;
+        } else if (sellIn >= 0) {
+            return quality + 3;
+        }
+        return 0;
+    }
+
+    private int getAgedBrieQuality(int quality) {
+        return quality + 1;
     }
 
     public Item getItem(int index) {
