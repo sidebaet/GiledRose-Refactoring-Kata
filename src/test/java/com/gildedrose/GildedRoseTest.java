@@ -65,12 +65,12 @@ public class GildedRoseTest {
      */
     @Test
     public void agedBrieQualityIncreaseWithTime() {
-        Item[] items = new Item[] { new Item("Aged Brie", 10, 1) };
+        Item[] items = new Item[] { new Item(Item.AGED_BRIE, 10, 1) };
         var app = new GildedRose(items);
         app.updateQuality();
         var item = app.getItem(0);
         assertNotNull(item);
-        assertEquals("Aged Brie", item.name);
+        assertEquals(Item.AGED_BRIE, item.name);
         assertEquals(2, item.quality);
         assertEquals(9, item.sellIn);
     }
@@ -80,12 +80,12 @@ public class GildedRoseTest {
      */
     @Test
     public void itemQualityCannotMaximumis50(){
-        Item[] items = new Item[] { new Item("Aged Brie", 10, 50) };
+        Item[] items = new Item[] { new Item(Item.AGED_BRIE, 10, 50) };
         var app = new GildedRose(items);
         app.updateQuality();
         var item = app.getItem(0);
         assertNotNull(item);
-        assertEquals("Aged Brie", item.name);
+        assertEquals(Item.AGED_BRIE, item.name);
         assertEquals(50, item.quality);
         assertEquals(9, item.sellIn);
     }
@@ -95,12 +95,12 @@ public class GildedRoseTest {
      */
     @Test
     public void sulfurasNeverDecreaseHisQuality() {
-        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 10, 80) };
+        Item[] items = new Item[] { new Item(Item.SULFURAS, 10, 80) };
         var app = new GildedRose(items);
         app.updateQuality();
         var item = app.getItem(0);
         assertNotNull(item);
-        assertEquals("Sulfuras, Hand of Ragnaros", item.name);
+        assertEquals(Item.SULFURAS, item.name);
         assertEquals(80, item.quality);
         assertEquals(10, item.sellIn);
     }
@@ -114,21 +114,21 @@ public class GildedRoseTest {
     public void bacstagePassIncrease1WhenSellinHigherThan10() {
 
         Item[] items = new Item[] {
-                new Item("Backstage passes to a TAFKAL80ETC concert", 20, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 11, 10)
+                new Item(Item.BACKSTAGE, 20, 10),
+                new Item(Item.BACKSTAGE, 11, 10)
         };
         var app = new GildedRose(items);
         app.updateQuality();
         var item = app.getItem(0);
         assertNotNull(item);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", item.name);
+        assertEquals(Item.BACKSTAGE, item.name);
         assertEquals(11, item.quality);
         assertEquals(19, item.sellIn);
 
 
         var item2 = app.getItem(1);
         assertNotNull(item2);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", item2.name);
+        assertEquals(Item.BACKSTAGE, item2.name);
         assertEquals(11, item2.quality);
         assertEquals(10, item2.sellIn);
     }
@@ -142,21 +142,21 @@ public class GildedRoseTest {
     public void bacstagePassIncrease2WhenSellinIsBetween6and10() {
 
         Item[] items = new Item[] {
-                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 6, 10),
+                new Item(Item.BACKSTAGE, 10, 10),
+                new Item(Item.BACKSTAGE, 6, 10),
         };
         var app = new GildedRose(items);
         app.updateQuality();
         var item1 = app.getItem(0);
         assertNotNull(item1);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", item1.name);
+        assertEquals(Item.BACKSTAGE, item1.name);
         assertEquals(12, item1.quality);
         assertEquals(9, item1.sellIn);
 
 
         var item2 = app.getItem(1);
         assertNotNull(item2);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", item2.name);
+        assertEquals(Item.BACKSTAGE, item2.name);
         assertEquals(12, item2.quality);
         assertEquals(5, item2.sellIn);
     }
@@ -170,21 +170,21 @@ public class GildedRoseTest {
     public void bacstagePassIncrease3WhenSellinIsBetween1and5() {
 
         Item[] items = new Item[] {
-                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 1, 10),
+                new Item(Item.BACKSTAGE, 5, 10),
+                new Item(Item.BACKSTAGE, 1, 10),
         };
         var app = new GildedRose(items);
         app.updateQuality();
         var item1 = app.getItem(0);
         assertNotNull(item1);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", item1.name);
+        assertEquals(Item.BACKSTAGE, item1.name);
         assertEquals(13, item1.quality);
         assertEquals(4, item1.sellIn);
 
 
         var item2 = app.getItem(1);
         assertNotNull(item2);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", item2.name);
+        assertEquals(Item.BACKSTAGE, item2.name);
         assertEquals(13, item2.quality);
         assertEquals(0, item2.sellIn);
     }
@@ -197,12 +197,12 @@ public class GildedRoseTest {
     @Test
     public void bacstagePassQualityIs0WhenSellinIs0() {
 
-        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10) };
+        Item[] items = new Item[] { new Item(Item.BACKSTAGE, 0, 10) };
         var app = new GildedRose(items);
         app.updateQuality();
         var item = app.getItem(0);
         assertNotNull(item);
-        assertEquals("Backstage passes to a TAFKAL80ETC concert", item.name);
+        assertEquals(Item.BACKSTAGE, item.name);
         assertEquals(0, item.quality);
         assertEquals(-1, item.sellIn);
     }
