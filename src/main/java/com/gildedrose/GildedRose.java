@@ -42,6 +42,9 @@ class GildedRose {
             case BACKSTAGE:
                 quality = getBackstageQuality(quality, item.sellIn);
                 break;
+            case CONJURED:
+                quality = getConjuredQuality(quality);
+                break;
             default:
                 quality = getDefaultQuality(quality, item.sellIn);
                 break;
@@ -49,7 +52,11 @@ class GildedRose {
         if (quality > 50) {
             return 50;
         }
-        return quality;
+        return Math.max(quality, 0);
+    }
+
+    private int getConjuredQuality(int quality) {
+        return quality - 2;
     }
 
     private int getDefaultQuality(int quality, int sellIn) {

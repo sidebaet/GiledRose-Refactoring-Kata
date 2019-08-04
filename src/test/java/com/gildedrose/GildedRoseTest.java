@@ -207,4 +207,30 @@ public class GildedRoseTest {
         assertEquals(-1, item.sellIn);
     }
 
+    /**
+     * "Conjured" items degrade in Quality twice as fast as normal items
+     */
+    @Test
+    public void conjuredQualityDecreaseTwiceFaster() {
+
+        Item[] items = new Item[] {
+                new Item(Item.CONJURED, 10, 10) ,
+                new Item(Item.CONJURED, 10, 1) ,
+        };
+        var app = new GildedRose(items);
+        app.updateQuality();
+
+        var item = app.getItem(0);
+        assertNotNull(item);
+        assertEquals(Item.CONJURED, item.name);
+        assertEquals(8, item.quality);
+        assertEquals(9, item.sellIn);
+
+        var item2 = app.getItem(1);
+        assertNotNull(item2);
+        assertEquals(Item.CONJURED, item2.name);
+        assertEquals(0, item2.quality);
+        assertEquals(9, item2.sellIn);
+    }
+
 }
