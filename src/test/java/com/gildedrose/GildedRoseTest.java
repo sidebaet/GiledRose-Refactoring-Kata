@@ -113,7 +113,10 @@ public class GildedRoseTest {
     @Test
     public void bacstagePassIncrease1WhenSellinHigherThan10() {
 
-        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 20, 10) };
+        Item[] items = new Item[] {
+                new Item("Backstage passes to a TAFKAL80ETC concert", 20, 10),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 11, 10)
+        };
         var app = new GildedRose(items);
         app.updateQuality();
         var item = app.getItem(0);
@@ -121,6 +124,13 @@ public class GildedRoseTest {
         assertEquals("Backstage passes to a TAFKAL80ETC concert", item.name);
         assertEquals(11, item.quality);
         assertEquals(19, item.sellIn);
+
+
+        var item2 = app.getItem(1);
+        assertNotNull(item2);
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", item2.name);
+        assertEquals(11, item2.quality);
+        assertEquals(10, item2.sellIn);
     }
 
     /**
